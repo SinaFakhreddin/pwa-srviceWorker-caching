@@ -1,0 +1,19 @@
+.header{
+    display: flex;
+
+    background-color: #2f2e2e;
+    color: white;
+
+}
+
+.header ul{
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.header ul>li{
+    text-decoration: none;
+    list-style-type: none;
+}
