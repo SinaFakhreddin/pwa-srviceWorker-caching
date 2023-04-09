@@ -1,8 +1,19 @@
-const cacheName = "v2";
+const cacheName = "v1";
+
+const cacheAssetes = [
+    "/",
+    "/contact.html",
+    "/about.html",
+    "/js/main.js",
+    "/style/style.css",
+];
+
 
 
 self.addEventListener("install" , (e)=>{
-    console.log("service worker is installed")
+    // e.waitUntil(
+    //     caches.open(cacheName).then((cach)=>cach.addAll(cacheAssetes)).then(res=>res.skipWaiting)
+    // )
 })
 
 
@@ -24,13 +35,13 @@ self.addEventListener("activate" , (e)=>{
 self.addEventListener("fetch" , (e)=>{
     e.respondWith(
         fetch(e.request).then(res=> {
-            console.log("res v2" , res)
+            // console.log("res v2" , res)
             //make a copy for each req
             const copyOfRes = res.clone()
             // open caches
             caches.open(cacheName).then((Cache)=>{
                 //add rseponse to cache
-                console.log("v2 add response to cache" , "e.req",e.request ,"copy" ,copyOfRes)
+                // console.log("v2 add response to cache" , "e.req",e.request ,"copy" ,copyOfRes)
                 Cache.put(e.request , copyOfRes)
             })
             return res
@@ -39,3 +50,11 @@ self.addEventListener("fetch" , (e)=>{
 })
 
 
+self.addEventListener("sync" , (e)=>{
+    console.log("SYNC")
+    if (e.tag==="task-1"){
+        e.waitUntil(
+            console.log("task in sw")
+        )
+    }
+})

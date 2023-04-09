@@ -9,8 +9,11 @@
     <link rel="stylesheet" href="./style/style.css">
 </head>
 <body>
-<h1>Hello Fucking PWA</h1>
 <div class="header">
+    <h1>Fucking PWA Test-2</h1>
+
+</div>
+<div class="navbar">
     <ul>
         <li><a href="/">home</a></li>
         <li><a href="about.html">about</a></li>
@@ -18,11 +21,62 @@
         <li><a href="dastekhar.html">daste khar</a></li>
     </ul>
 </div>
-<div>
-    <h1>daste khar</h1>
+
+
+
+
+
+<div class="main-shopping-send-product">
+    <div class="main-shopping-header">
+        <h2>Send Product</h2>
+    </div>
+    <div class="send-product">
+        <h4 class="form-header">Send Product (Background-Sync)</h4>
+        <form id="form" class="form-product">
+            <div class="input-field">
+                <label> title :</label>
+                <input name="title" type="text">
+            </div>
+            <div class="input-field">
+                <label> product-body :</label>
+                <textarea id="text-area" name="body" style="width: 50%" rows="4" cols="50"></textarea>
+            </div>
+            <div class="input-field">
+                <label> product image</label>
+                <input name="image" type="file">
+            </div>
+            <div class="input-field">
+                <label> product price :</label>
+                <input name="price" type="text">
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+    </div>
 </div>
+<script src="./js/main.js"></script>
+<script>
+    let body = document.querySelector("textarea[name='body']")
+    let price = document.querySelector("input[name='price']")
+    let title = document.querySelector("input[name='title']")
+    let image = document.querySelector("input[name='image']")
+    let form = document.getElementById('form')
 
-
-<script src="./js/index.js"></script>
+    form.addEventListener("submit" , (e)=>{
+        e.preventDefault();
+        if (body.value ==="" || title.value===""|| price.value===""|| image.files[0]=== undefined){
+            console.log("invalid data")
+        }else if("serviceWorker" in navigator && "SyncManager" in window){
+            console.log("Sync Supported")
+            navigator.serviceWorker.ready.then((SyncReg)=>{
+                console.log("servie worker ready")
+                return SyncReg.sync.register("task-1").then(()=> {
+                    console.log("task-1 register")
+                }).catch(err=>console.log("err unregistered task :" , err))
+            })
+        }
+    })
+</script>
 </body>
 </html>
